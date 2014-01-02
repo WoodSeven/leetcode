@@ -1,0 +1,56 @@
+class Solution {
+public:
+    bool isNumber(const char *s) {
+        string num = s;
+        int len = num.size();
+        int first = 0,second = len - 1;
+        while(first < len && num[first] == ' ')first++;
+        if(num[first] == '+' || num[first] == '-')first++;//remember pass the "SIGN",i forgot it in the first try.
+        while(second >= first && num[second] == ' ')second--;
+        if(first > second)return false;
+        num = num.substr(first,second-first+1);
+        int e_pos = -1,dot_pos = -1;
+        for(int i = 0;i < num.size();i++)
+        {
+            if(e_pos == -1 && num[i] == 'e')
+            {
+                e_pos = i;
+                if(num[i+1] == '+' || num[i+1] == '-')
+                    i++;
+            }
+            else if(dot_pos == -1 && num[i] == '.')dot_pos = i;
+            else
+            {
+                if(num[i] <= '9' & num[i] >= '0')continue;
+                else return false;
+            }
+        }
+        string preStr,lastStr,midStr;
+        if(e_pos != -1 && dot_pos == -1)//xxxexxx
+        {
+            preStr = num.substr(0,e_pos);
+            if(preStr == "")return false;
+            if(num[e_pos+1] == '+' || num[e_pos+1] == '-')
+                lastStr = num.substr(e_pos+2);
+            else lastStr = num.substr(e_pos+1);
+            if(lastStr == "")return false;
+        }
+        else if(e_pos == -1 && dot_pos != -1)//xxx.xxx
+        {
+            preStr = num.substr(0,dot_pos);
+            lastStr = num.substr(dot_pos+1);
+            if(preStr == "" && lastStr == "")return false;
+        }
+        else if(e_pos != -1 && dot_pos != -1)//xxxx.xxexxx
+        {
+            if(dot_pos > e_pos)return false;
+            preStr = num.substr(0,dot_pos);
+            midStr = num.substr(dot_pos+1,e_pos - dot_pos - 1);
+            if(preStr == "" && midStr == "")return false;
+            if(num[e_pos+1] == '+' || num[e_pos+1] == '-')lastStr = num.substr(e_pos+2);
+            else lastStr = num.substr(e_pos+1);
+            if(lastStr == "")return false;
+        }
+        return true;
+    }
+};
