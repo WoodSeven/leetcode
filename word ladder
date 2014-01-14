@@ -1,0 +1,57 @@
+class Solution {
+public:
+    vector<string> getWord(string word,unordered_set<string>&visited,unordered_set<string>&dict)
+    {
+        vector<string>ret;
+        for(int i = 0;i < word.size();i++)
+        {
+            char ch = word[i];
+            for(char temp = 'a';temp <= 'z';temp++)
+            {
+                if(temp != ch)
+                {
+                    word[i] = temp;
+                    if(visited.find(word) == visited.end() && dict.find(word) != dict.end())
+                    {
+                        visited.insert(word);
+                        ret.push_back(word);
+                    }
+                }
+                word[i] = ch;
+            }
+        }
+        return ret;
+    }
+    int ladderLength(string start, string end, unordered_set<string> &dict) {
+        if(start == end)return 0;
+        unordered_set<string>visited;
+        vector<string>word_set;
+        queue<vector<string> > *q1 = new queue<vector<string> >();
+        queue<vector<string> > *q2 = new queue<vector<string> >();
+        vector<string>word_set;
+        int len = 2;
+        visited.insert(start);
+        q1->push(getWord(start,visited,dict));
+        while(!q1 ->empty())
+        {
+            while(!q1 ->empty())
+            {
+                word_set = q1->front();
+                q1->pop();
+                for(int i = 0;i < word_set.size();i++)
+                {
+                    string word = word_set[i];
+                    if(word == end)return len;
+                    else 
+                        q2 ->push(getWord(word,visited,dict));
+                }
+            }
+            queue<vector<string> > *temp;
+            temp = q1;
+            q1 = q2;
+            q2 = temp;
+            len++;
+        }
+        return 0;
+    }
+};
