@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int candy(vector<int> &ratings) {
+        int len = ratings.size();
+        vector<int>candy(len,0);
+        for(int i = 1;i < len;i++)
+            if(ratings[i] > ratings[i-1])candy[i] = candy[i-1] + 1;
+        int sum = len;
+        for(int i = len-2;i >= 0 ;i--)
+        {
+            if(ratings[i] > ratings[i+1] && candy[i] <= candy[i+1])
+                candy[i] = candy[i+1]+1;
+            sum += candy[i];
+        }
+        sum += candy[len-1];
+        return sum;
+    }
+};
