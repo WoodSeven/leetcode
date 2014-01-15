@@ -1,0 +1,21 @@
+class Solution {
+public:
+    double findMedianSortedArrays(int A[], int m, int B[], int n) {
+        if(A == NULL || B == NULL || m < 0 || n < 0)return 0;
+        vector<int>c(m+n,0);
+        int i = 0,j = 0,k = 0;
+        while(i < m && j < n){
+            if(A[i] < B[j])c[k++] = A[i++];
+            else c[k++] = B[j++];
+        }
+        while(i < m)
+            c[k++] = A[i++];
+        while(j < n)
+            c[k++] = B[j++];
+        double res;
+        if((m+n)%2 == 1)
+            return c[(m+n)/2];
+        else
+            return ((double)c[(m+n-1)/2]+(double)c[(m+n)/2])/2;
+    }
+};
