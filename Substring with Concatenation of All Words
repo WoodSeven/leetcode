@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<int> findSubstring(string S, vector<string> &L) {
+        // IMPORTANT: Please reset any member data you declared, as
+        // the same Solution instance will be reused for each test case.
+        vector<int> ret;
+        if(S.length() == 0 || L.size() == 0)return ret;
+        map<string,int>visited;
+        map<string,int>dict;
+        int word_num = L.size(),word_len = L[0].size(),count = 0,cur = 0;
+        for(int i = 0;i < word_num;i++)dict[L[i]]++;
+        while(cur < S.length())
+        {
+            if(count < word_num)
+            {
+                string word = S.substr(cur,word_len);
+                if(dict.find(word) != dict.end())
+                {
+                    if(visited.find(word) == visited.end() || visited[word] < dict[word])
+                    {
+                        visited[word]++;
+                        count++;
+                    }
+                    else
+                    {
+                        int pos = cur - count * word_len;
+                        while(S.substr(pos,word_len) != word)
+                        {
+                            visited[S.substr(pos,word_len) ]--;
+                            if(visited[S.substr(pos,word_len) ] == 0)visited.erase(S.substr(pos,word_len) );
+                            pos += word_len;
+                        }
+                    }
+                    cur += word_len;
+                }
+                else
+                {
+                    visited.clear();
+                    cur = cur - count * word_len + 1;
+                    count = 0;
+                }
+            }
+            if(count == word_num)
+            {
+                if(--visited[S.substr(cur-word_len*count,word_len)]==0)
+                    visited.erase(S.substr(cur-word_len*count,word_len));
+                ret.push_back(cur-word_len*count);
+                count--;
+            }
+        }
+        return ret;
+    }
+};
