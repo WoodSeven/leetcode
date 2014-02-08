@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string minWindow(string S, string T) {
+        string res = "";
+        if(T.size() > S.size() || T == "" || S == "")return res;
+        int win[256] = {},dict[256] = {},cnt = 0,start = 0;
+        for(int i = 0;i < T.size();i++)
+            dict[T[i]]++;
+        for(int i = 0;i < S.size();i++)
+        {
+            if(dict[S[i]] == 0)continue;
+            else
+            {
+                win[S[i]]++;
+                if(win[S[i]] <= dict[S[i]])cnt++;
+                if(cnt < T.size())continue;
+                else
+                {
+                    while(dict[S[start]] == 0 || win[S[start]] > dict[S[start]])
+                    {
+                        if(win[S[start]] > dict[S[start]])win[S[start]]--;
+                        start++;
+                    }
+                    if(res == "" || res.size() > i-start+1)res = S.substr(start,i-start+1);
+                }
+            }
+        }
+        return res;
+    }
+};
