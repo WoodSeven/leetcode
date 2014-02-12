@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        if(s.size() < 2)return 0;
+        stack<pair<char,int> >st;
+        int count = 0,mx = 0,len = s.size();
+        for(int i = 0;i < len;i++)
+        {
+            if(st.empty() || s[i] == '(' || st.top().first == ')')
+                st.push(make_pair(s[i],i));
+            else st.pop();
+        }
+        while(len)
+        {
+            if(st.empty() || st.top().second < len - 1)//if st.top().second == len-1,the last character of s is '('
+                count++;
+            else
+            {
+                mx = max(mx,count);
+                count = 0;
+                st.pop();
+            }
+            len--;
+        }
+        mx = max(count,mx);
+        return mx;
+    }
+};
