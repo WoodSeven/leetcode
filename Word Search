@@ -1,0 +1,41 @@
+class Solution {
+public:
+    bool exist(vector<vector<char> > &board,int x,int y,string word,int row,int col,vector<vector<bool> > &visited)
+    {
+        if(!word.size())return true;
+        if(word[0] != board[x][y])return false;
+        visited[x][y] = true;
+        bool res = false;
+        if(x+1 < row && !visited[x+1][y])
+            res = exist(board,x+1,y,word.substr(1),row,col,visited);
+        if(!res && y+1 < col && !visited[x][y+1])
+            res = exist(board,x,y+1,word.substr(1),row,col,visited);
+        if(!res && x-1 >= 0 && !visited[x-1][y])
+            res = exist(board,x-1,y,word.substr(1),row,col,visited);
+        if(!res && y-1 >= 0 && !visited[x][y-1])
+            res = exist(board,x,y-1,word.substr(1),row,col,visited);
+        if(res || (!res && word.size() <= 1))return true;//word only has one character remained.
+        else
+        {
+            visited[x][y] = false;
+            return false;
+        }
+    }
+    bool exist(vector<vector<char> > &board, string word) {
+        int row = board.size();
+        if(!row)return false;
+        int col = board[0].size();
+        if(!col)return false;
+        for(int i = 0;i < row;i++)
+            for(int j = 0;j < col;j++)
+            {
+                if(word[0] == board[i][j])
+                {
+                    vector<vector<bool> >visited(row,vector<bool>(col,false));
+                    if(exist(board,i,j,word,row,col,visited))
+                        return true;
+                }
+            }
+        return false;
+    }
+};
