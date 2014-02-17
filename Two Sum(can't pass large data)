@@ -49,5 +49,6 @@ public:
             ret.push_back(end+1);
             ret.push_back(start+1);
         }
+        return ret;
     }
 };
