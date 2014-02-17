@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int> > &matrix) {
+        vector<int>ret;
+        int rows = matrix.size();
+        if(!rows)return ret;
+        int cols = matrix[0].size();
+        if(!cols)return ret;
+        int row,col,level = 0,n = min(rows,cols);
+        while(level * 2 < n)
+        {
+            int endx = cols - level - 1;
+            int endy = rows - level - 1;
+            for(int j = level;j <= endx;j++)
+                ret.push_back(matrix[level][j]);
+            if(level < endy)//case:only 1 row
+                for(int i = level+1;i <= endy;i++)
+                    ret.push_back(matrix[i][endx]);
+            if(level < endx && level < endy)
+                for(int j = endx-1;j >= level;j--)
+                    ret.push_back(matrix[endy][j]);
+            if(level < endy - 1 && level < endx)//only 2 row
+                for(int i = endy - 1;i > level;i--)
+                    ret.push_back(matrix[i][level]);
+            level++;
+        }
+        return ret;
+    }
+};
