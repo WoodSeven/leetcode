@@ -1,0 +1,42 @@
+class Solution {
+public:
+    class hstack
+    {
+        public:
+        int hi;
+        int pos;//defined before construct functions,or compile error
+        hstack():hi(0),pos(0){}
+        hstack(int h,int p):hi(h),pos(p){}
+    };
+    int largestRectangleArea(vector<int> &height) {
+        int len = height.size();
+        if(len == 0)return 0;
+        int i = 0,cur = 0,mx = 0;
+        stack<hstack>st;
+        for(;i < len;i++)
+        {
+            if(st.empty() || st.top().hi <= height[i])
+                st.push(hstack(height[i],i));
+            else
+            {
+                hstack node;
+                while(!st.empty() && st.top().hi > height[i])
+                {
+                    node = st.top();
+                    st.pop();
+                    cur = node.hi * (i - node.pos);
+                    mx = max(mx,cur);
+                }
+                st.push(hstack(height[i],node.pos));
+            }
+        }
+        while(!st.empty())
+        {
+            hstack node = st.top();
+            st.pop();
+            cur = node.hi*(i - node.pos);
+            mx = max(mx,cur);
+        }
+        return mx;
+    }
+};
