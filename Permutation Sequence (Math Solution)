@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string ret;
+        if(n == 0 || k == 0)return ret;
+        vector<int>num(n);
+        int count = 1,times = 0;
+        for(int i = 0;i < n;i++)
+        {
+            num[i] = i+1;
+            count *= (i+1);
+        }
+        if(k > count)return ret;
+        k--;//because vector num is zero based
+        while(times < n)
+        {
+            count /= (n - times);
+            int selected = k / count;
+            ret += (num[selected] + '0');
+            for(int j = selected;j < n-1-times;j++)
+                num[j] = num[j+1];
+            k = k%count;
+            times++;
+        }
+        return ret;
+    }
+};
