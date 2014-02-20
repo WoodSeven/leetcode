@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int len = s.size();
+        if(len == 0)return true;
+        for(int i = 0;i < len;i++)
+            if(s[i] <= 'Z' && s[i] >= 'A')s[i] = tolower(s[i]);
+        int first = 0,end = len - 1;
+        while(first < end)
+        {
+            while(first < end && !((s[first]<='z' && s[first] >= 'a') ||(s[first] <= '9' && s[first] >= '0')))first++;
+            while(first < end && !((s[end]<='z' && s[end] >= 'a') ||(s[end] <= '9' && s[end] >= '0')))end--;
+            if(first < end && s[first] != s[end])return false;
+            first++;
+            end--;
+        }
+        return true;
+    }
+};
