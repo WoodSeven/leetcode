@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool isScramble(string s1, string s2) {
+        int len1 = s1.size(),len2 = s2.size();
+        if(len1 != len2)return false;
+        if(len1 == 0 || s1 == s2)return true;
+        /*dp[k][i][j]表示s2从j开始长度为k的字符串能否又s1从i开始长度为k的字符串转换而成，对比递归版本理解*/
+        vector<vector<vector<bool> > >dp(len1+1,vector<vector<bool> >(len1,vector<bool>(len1,false)));
+        for(int i = 0;i < len1;i++)
+            for(int j = 0;j < len1;j++)
+                dp[1][i][j] = s1[i] == s2[j] ? true : false;
+        
+        for(int k = 2;k <= len1;k++)
+            for(int i = 0;i < len1-k+1;i++)
+                for(int j = 0;j < len1-k+1;j++)
+                    for(int d = 1;d < k && !dp[k][i][j];d++)
+                        dp[k][i][j] = (dp[d][i][j] && dp[k-d][i+d][j+d]) || (dp[d][i][j+k-d] && dp[k-d][i+d][j]);
+                        
+        return dp[len1][0][0];
+    }
+};
