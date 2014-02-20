@@ -1,0 +1,53 @@
+class Solution {
+public:
+    class hstack
+    {
+        public:
+        int hi;
+        int pos;
+        hstack():hi(0),pos(0){}
+        hstack(int height,int i):hi(height),pos(i){}
+    };
+    int maximalRectangle(vector<vector<char> > &matrix) {
+        int rows = matrix.size();
+        if(rows == 0)return 0;
+        int cols = matrix[0].size();
+        if(cols == 0)return 0;
+        vector<int>height(cols,0);
+        int cur = 0,mx = 0;
+        for(int i = 0;i < rows;i++)
+        {
+            stack<hstack>hs;
+            for(int j = 0;j < cols;j++)
+            {
+                if(matrix[i][j] == '1')height[j]++;
+                else height[j] = 0;
+            }
+            for(int k = 0;k < cols;k++)
+            {
+                if(hs.empty() || hs.top().hi <= height[k])
+                    hs.push(hstack(height[k],k));
+                else
+                {
+                    hstack node;
+                    while(!hs.empty() && hs.top().hi > height[k])
+                    {
+                        node = hs.top();
+                        hs.pop();
+                        cur = (node.hi)*(k-node.pos);
+                        mx = max(cur,mx);
+                    }
+                    hs.push(hstack(height[k],node.pos));
+                }
+            }
+            while(!hs.empty())
+            {
+                hstack node = hs.top();
+                hs.pop();
+                cur = (node.hi)*(cols-node.pos);
+                mx = max(cur,mx);
+            }
+        }
+        return mx;
+    }
+};
