@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int len = s.size();
+        if(len == 0 || len == 1)return len;
+        vector<bool>visited(256,false);
+        int j = 0,i = 0,cur = 0,mx = 0;
+        for(;j < len;j++)
+        {
+            if(!visited[s[j]])
+            {
+                visited[s[j]] = true;
+                cur++;
+            }
+            else
+            {
+                while(i < j && s[i] != s[j])
+                {
+                    visited[s[i]] = false;
+                    cur--;
+                    i++;
+                }
+                if(i != j && s[i] == s[j])
+                    i++;
+            }
+            mx = max(cur,mx);
+        }
+        return mx;
+    }
+};
