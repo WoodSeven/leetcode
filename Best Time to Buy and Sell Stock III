@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+        int len = prices.size();
+        if(len < 2)return 0;
+        vector<int>dp(len,0);
+        int cur,mx_diff = 0,mi_val = prices[0];
+        for(int i = 1;i < len;i++)
+        {
+            cur = prices[i] - mi_val;
+            if(cur > mx_diff)mx_diff = cur;
+            if(prices[i] < mi_val)mi_val = prices[i];
+            dp[i] = mx_diff;
+        }//record the max profit at every single node in the first transaction
+        int high = prices[len-1];
+        int profit,final_profit = 0,mx_profit = 0;
+        for(int i = len-2;i >= 0;i--)
+        {
+            if(high - prices[i] > mx_profit)
+                mx_profit = high - prices[i];//calculate the second greatest transaction profit
+            if(mx_profit + dp[i] > final_profit)
+                final_profit = mx_profit + dp[i];
+            if(prices[i] > high)
+                high = prices[i];
+        }
+        return final_profit;
+    }
+};
