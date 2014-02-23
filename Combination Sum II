@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void comb(vector<int> &num, int target,int start,vector<vector<int> >&ret,vector<int>res)
+    {
+        if(target == 0)
+        {
+            ret.push_back(res);
+            return;
+        }
+        if(target < 0 || start > num.size() || num[start] > target)return;
+        for(int i = start;i < num.size();i++)
+        {
+            if(i > start && num[i] == num[i-1])continue;
+            res.push_back(num[i]);
+            comb(num,target-num[i],i+1,ret,res);
+            res.pop_back();
+        }
+    }
+    vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+        vector<vector<int> >ret;
+        vector<int>res;
+        int len = num.size();
+        if(len == 0 || target < 1 || (len == 1 && num[0] != target))return ret;
+        sort(num.begin(),num.end());
+        comb(num,target,0,ret,res);
+        return ret;
+    }
+};
