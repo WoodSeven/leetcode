@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<int> >  permutation(vector<int> &num)
+    {
+        vector<vector<int> >ret;
+        if(num.size() == 0)
+        {
+            vector<int>res;
+            ret.push_back(res);
+            return ret;
+        }
+        vector<int>num1(num);
+        int the_num = num[0];
+        num1.erase(num1.begin());
+        vector<vector<int> >ret_temp = permutation(num1);
+        vector<vector<int> >::iterator it = ret_temp.begin();
+        for(;it != ret_temp.end();it++)
+        {
+            for(int i = 0;i <= (*it).size();i++)
+            {
+                vector<int>temp(*it);
+                vector<int>::iterator iit = temp.begin();
+                temp.insert(iit+i,the_num);
+                ret.push_back(temp);
+            }
+        }
+        return ret;
+    }
+    vector<vector<int> > permute(vector<int> &num) {
+        vector<vector<int> >ret;
+        int n = num.size();
+        if(!n)return ret;
+        ret = permutation(num);
+        return ret;
+    }
+};
