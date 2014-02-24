@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int len1 = a.size(),len2 = b.size();
+        if(!len1)return b;
+        else if(!len2)return a;
+        string res;
+        int i = len1-1,j = len2-1,carry = 0;
+        stack<int>st;
+        while(i >= 0 && j >= 0)
+        {
+            int num = (a[i] - '0') + (b[j] - '0') + carry;
+            st.push(num % 2);
+            carry = num / 2;
+            i--;j--;
+        }
+        while(i >= 0)
+        {
+            int num = (a[i] - '0') + carry;
+            st.push(num % 2);
+            carry = num / 2;
+            i--;
+        }
+        while(j >= 0)
+        {
+            int num = (b[j] - '0') + carry;
+            st.push(num % 2);
+            carry = num / 2;
+            j--;
+        }
+        if(carry)res.push_back('1');
+        while(!st.empty())
+        {
+            res.push_back(st.top()+'0');
+            st.pop();
+        }
+        return res;
+    }
+};
