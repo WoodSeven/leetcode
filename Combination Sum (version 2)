@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void combinationSum(int start,vector<int> &candidates,int target,vector<vector<int> > &ret,vector<int>&vec)
+    {
+        if(target < 0)return;
+        if(target == 0)
+        {
+            if(find(ret.begin(),ret.end(),vec) == ret.end())
+                ret.push_back(vec);
+            return;
+        }
+        for(int i = start;i < candidates.size();i++)
+        {
+            vec.push_back(candidates[i]);
+            combinationSum(i,candidates,target - candidates[i],ret,vec);
+            vec.pop_back();
+        }
+    }
+    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        vector<vector<int> >ret;
+        vector<int>vec;
+        int size = candidates.size();
+        if(size == 0)return ret;
+        sort(candidates.begin(),candidates.end());
+        combinationSum(0,candidates,target,ret,vec);
+        return ret;
+    }
+};
