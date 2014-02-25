@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void LC(string digits,vector<string>&num,vector<string>&ret,int n,int depth,string res)
+    {
+        if(depth == n)
+        {
+            ret.push_back(res);
+            return;
+        }
+        int i = digits[depth] - '0';
+        for(int j = 0;j < num[i].size();j++)
+        {
+            res.push_back(num[i][j]);
+            LC(digits,num,ret,n,depth+1,res);
+            res.pop_back();
+        }
+            
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string>ret;
+        int n = digits.size();
+        vector<string>num(10);
+        string res;
+        num[2] = "abc";
+        num[3] = "def";
+        num[4] = "ghi";
+        num[5] = "jkl";
+        num[6] = "mno";
+        num[7] = "pqrs";
+        num[8] = "tuv";
+        num[9] = "wxyz";
+        LC(digits,num,ret,n,0,res);
+        return ret;
+    }
+};
