@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void combination(int start,vector<int> &candidates,int target,vector<vector<int> >&ret,vector<int>&res)
+    {
+        if(target == 0)
+        {
+            ret.push_back(res);
+            return;
+        }
+        for(int i = start;i < candidates.size();i++)
+        {
+            if(i == 0 || candidates[i] != candidates[i-1]){
+                if(target -candidates[i] < 0)continue;
+                res.push_back(candidates[i]);
+                combination(i,candidates,target-candidates[i],ret,res);
+                res.pop_back();
+            }
+        }
+    }
+    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+        vector<vector<int> >ret;
+        int n = candidates.size();
+        if(!n || target < 1)return ret;
+        vector<int>res;
+        sort(candidates.begin(),candidates.end());
+        combination(0,candidates,target,ret,res);
+        return ret;
+    }
+};
