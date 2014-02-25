@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool check(vector<int>&board,int row)
+    {
+        if(!row)return true;
+        for(int i = 0;i < row;i++)
+            if(board[i] == board[row] || abs(board[row] - board[i]) == row - i)return false;
+            
+        return true;
+    }
+    void getNQ(int row,int n,vector<int>&board,vector<vector<string> >&ret)
+    {
+        if(row == n)
+        {
+            vector<string>res;
+            for(int i = 0;i < n;i++)
+            {
+                string st(n,'.');
+                st[board[i]] = 'Q';
+                res.push_back(st);
+            }
+            ret.push_back(res);
+            return;
+        }
+        for(int j = 0;j < n;j++)
+        {
+            board[row] = j;
+            if(check(board,row))
+                getNQ(row+1,n,board,ret);
+        }
+    }
+    vector<vector<string> > solveNQueens(int n) {
+        vector<vector<string> >ret;
+        if(n < 4 && n != 1)return ret;
+        vector<int>board(n,-1);
+        getNQ(0,n,board,ret);
+        return ret;
+    }
+};
