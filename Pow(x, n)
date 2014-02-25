@@ -1,0 +1,13 @@
+class Solution {
+public:
+    double pow(double x, int n) {
+        if(x == 0 && n < 0)return 0;
+        if(n == 0)return 1;
+        int k = abs(n);
+        double res = pow(x,k >> 1);
+        res *= res;
+        if(k & 0x1)res *= x;
+        if(n < 0)return 1/res;
+        else return res;
+    }
+};
