@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void subsets(vector<int>& S,vector<vector<int> >&ret,vector<int>& res,int start)
+    {
+        ret.push_back(res);
+        for(int i = start;i < S.size();i++)
+        {
+            res.push_back(S[i]);
+            subsets(S,ret,res,i+1);
+            res.pop_back();
+        }
+    }
+    vector<vector<int> > subsets(vector<int> &S) {
+        vector<vector<int> >ret;
+        if(!S.size())return ret;
+        vector<int>res;
+        sort(S.begin(),S.end());
+        subsets(S,ret,res,0);
+        return ret;
+    }
+};
