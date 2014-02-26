@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void subWD(int start,vector<int>&S,vector<vector<int> >&ret,vector<int>&res)
+    {
+        ret.push_back(res);
+        for(int i = start; i < S.size();i++)
+        {
+            if(i == start || S[i] != S[i-1])
+            {
+                res.push_back(S[i]);
+                subWD(i+1,S,ret,res);
+                res.pop_back();
+            }
+        }
+    }
+    vector<vector<int> > subsetsWithDup(vector<int> &S) {
+        int n = S.size();
+        vector<vector<int> >ret;
+        if(!n)return ret;
+        vector<int>res;
+        sort(S.begin(),S.end());
+        subWD(0,S,ret,res);
+        return ret;
+    }
+};
