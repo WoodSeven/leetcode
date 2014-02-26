@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int> &num) {
+        int len = num.size();
+        if(!len || len == 1)return len;
+        set<int>dict;
+        for(int i = 0;i < len;i++)
+            dict.insert(num[i]);
+        set<int>::iterator it = dict.begin();
+        int mx = 0;
+        for(;it != dict.end();it++)
+        {
+            int cur = 1,pre = *it - 1,after = *it + 1;
+            dict.erase(*it);
+            while(dict.find(pre) != dict.end())
+            {
+                dict.erase(pre);
+                pre--;
+                cur++;
+            }
+            while(dict.find(after) != dict.end())
+            {
+                dict.erase(after);
+                after++;
+                cur++;
+            }
+            mx = max(mx,cur);
+        }
+        return mx;
+    }
+};
