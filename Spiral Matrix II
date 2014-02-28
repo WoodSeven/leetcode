@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int> > generateMatrix(int n) {
+        vector<vector<int> >ret(n,vector<int>(n));
+        int num = 1,level = 0;
+        while(num <= n*n)
+        {
+            for(int j = level;j < n-level && num <= n*n;j++)
+                ret[level][j] = num++;
+            for(int i = level+1;i < n-level && num <= n*n;i++)
+                ret[i][n-level-1] = num++;
+            for(int j = n-level-2;j >= level && num <= n*n;j--)
+                ret[n-level-1][j] = num++;
+            for(int i = n-level-2;i > level && num <= n*n;i--)
+                ret[i][level] = num++;
+            level++;
+        }
+        return ret;
+    }
+};
