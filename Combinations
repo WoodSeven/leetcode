@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void combine(int start,int n,int k,vector<vector<int> >&ret,vector<int>&res)
+    {
+        if(res.size() == k)
+        {
+            ret.push_back(res);
+            return;
+        }
+        for(int i = start;i <= n;i++)
+        {
+            res.push_back(i);
+            combine(i+1,n,k,ret,res);
+            res.pop_back();
+        }
+    }
+    vector<vector<int> > combine(int n, int k) {
+        vector<vector<int> >ret;
+        vector<int>res;
+        combine(1,n,k,ret,res);
+        return ret;
+    }
+};
