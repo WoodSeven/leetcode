@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isValid(vector<int>&board,int cur)
+    {
+        if(cur == 0)return true;
+        for(int i = 0;i < cur;i++)
+            if(board[i] == board[cur] || (abs(board[i] - board[cur]) == cur - i))return false;
+        return true;
+    }
+    void totalN(vector<int>&board,int &sum,int level,int n)
+    {
+        if(level == n)
+        {
+            sum++;
+            return;
+        }
+        for(int i = 0;i < n;i++)
+        {
+            board[level] = i;
+            if(isValid(board,level))
+                totalN(board,sum,level+1,n);
+        }
+    }
+    int totalNQueens(int n) {
+        vector<int>board(n,0);
+        int sum = 0;
+        totalN(board,sum,0,n);
+        return sum;
+    }
+};
