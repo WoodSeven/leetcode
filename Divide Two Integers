@@ -13,7 +13,6 @@ public:
                 res += 1<<i;
             }
         }
-        return (dividend ^ divisor)>>31 ?-res : res;
-        
+        return (dividend ^ divisor)>>31 ?-res : res;//the highest bit is symbolic bit
     }
 };
