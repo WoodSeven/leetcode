@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void sortColors(int A[], int n) {
+        if(!A || !n || n==1)return;
+        int rid = 0,bid = n-1,cur = 0;
+        while(cur <= bid)
+        {
+            if(A[cur] == 0)
+            {
+                swap(A[cur],A[rid]);
+                rid++;
+            }
+            else if(A[cur] == 2)
+            {
+                swap(A[cur],A[bid]);
+                bid--;
+                continue;
+            }
+            cur++;
+        }
+    }
+};
