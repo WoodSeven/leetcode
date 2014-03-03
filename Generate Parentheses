@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void gP(int left,int right,string res,vector<string>&ret,int n)
+    {
+        if(left < right)return;
+        if(left == n && right == n)
+        {
+            ret.push_back(res);
+            return;
+        }
+        if(left < n)gP(left + 1,right,res+"(",ret,n);
+        if(right < n)gP(left,right+1,res+")",ret,n);
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string>ret;
+        int left = 0,right = 0;
+        string res;
+        gP(left,right,res,ret,n);
+        return ret;
+    }
+};
