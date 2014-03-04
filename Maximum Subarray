@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int maxSubArray(int A[], int n) {
+        if(!A || !n)return 0;
+        int cur = 0,sum = 0,mx = INT_MIN,mx_single = INT_MIN;
+        bool all_negative = true;
+        while(cur < n)
+        {
+            if(A[cur] >= 0)all_negative = false;
+            mx_single = max(mx_single,A[cur]);
+            sum += A[cur];
+            if(sum <= 0)
+                sum = 0;
+            cur++;
+            mx = max(mx,sum);
+        }
+        if(!all_negative)return mx;
+        else return mx_single;
+    }
+};
