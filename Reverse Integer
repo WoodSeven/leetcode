@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int reverse(int x) {
+        // IMPORTANT: Please reset any member data you declared, as
+        // the same Solution instance will be reused for each test case.
+        if(x == 0)
+            return 0;
+        int num = 0;
+        while(x)
+        {
+            int k = x % 10;
+            num = num*10 + k;
+            x /= 10;
+        }
+        return num;
+    }
+};
