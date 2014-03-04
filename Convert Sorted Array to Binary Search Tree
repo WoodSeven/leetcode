@@ -1,0 +1,30 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode *sortedArrayToBST(vector<int> &num) {
+        // IMPORTANT: Please reset any member data you declared, as
+        // the same Solution instance will be reused for each test case.
+        int size = num.size();
+        if(size == 0)
+            return NULL;
+        else if( size == 1)
+        {
+            TreeNode* pNode = new TreeNode(num[0]);
+            return pNode;
+        }
+        TreeNode* root = new TreeNode(num[size/2]);
+        vector<int>vleft(num.begin(),num.begin() + size/2);
+        vector<int>vright(num.begin()+size/2+1,num.end());
+        root ->left = sortedArrayToBST(vleft);
+        root ->right = sortedArrayToBST(vright);
+        return root;
+    }
+};
