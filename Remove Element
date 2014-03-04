@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int removeElement(int A[], int n, int elem) {
+        if(!A || !n)return 0;
+        int cur = 0,last = n-1;
+        while(cur <= last)
+        {
+            while(cur <= last && A[cur] != elem)cur++;
+            while(cur <= last && A[last] == elem)last--;
+            if(cur <= last)
+            {
+                swap(A[cur],A[last]);
+                cur++;
+                last--;
+            }
+        }
+        return cur;
+    }
+};
