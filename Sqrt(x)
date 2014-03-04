@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int sqrt(int x) {
+        // IMPORTANT: Please reset any member data you declared, as
+        // the same Solution instance will be reused for each test case.
+        double start = 3,dif = (start * start + x);
+        while(dif > 0.1)
+        {
+            start = (start*start + x)/start/2;
+            dif = (start * start - x);
+        }
+        return start;
+    }//newton method
+};
